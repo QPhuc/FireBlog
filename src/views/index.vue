@@ -6,7 +6,7 @@
             <div class="container">
                 <h3>View More Recent Blogs</h3>
                 <div class="blog-cards">
-                    <BlogCard :post="post" v-for="(post, index) in sampleCards" :key="index" />
+                    <BlogCard :post="post" v-for="(post, index) in sampleBlogCards" :key="index" />
                 </div>
             </div>
         </div>
@@ -47,14 +47,13 @@ export default {
                     blogCoverPhoto: "designed-for-everyone",
                 },
             ],
-            sampleCards: [
-                { blogTitle: "Blog Card #1", blogCoverPhoto: "stock-1", blogDate: "01/01/2022" },
-                { blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "01/02/2022" },
-                { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "01/03/2022" },
-                { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "01/04/2022" },
-            ]
         };
     },
+    computed: {
+        sampleBlogCards() {
+            return this.$store.state.sampleBlogCards;
+        }
+    }
 }
 </script>
 
