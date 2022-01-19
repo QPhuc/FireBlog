@@ -1,5 +1,5 @@
 <template>
-    <div class="blog-wrapper">
+    <div class="blog-wrapper no-user">
         <div class="blog-content">
             <div>
                 <h2 v-if="post.welcomeScreen">{{ post.title }}</h2>
@@ -8,11 +8,11 @@
                 <p class="content-preview" v-else>{{ post.blogHTML }}</p>
                 <router-link class="link link-light" v-if="post.welcomeScreen" to="#">
                     Login / Register
-                    <i class="fas fa-arrow-right arrow-light"></i>
+                    <i class="fas fa-arrow-right arrow arrow-light"></i>
                 </router-link>
-                <router-link class="link link-light" v-else to="#">
+                <router-link class="link" v-else to="#">
                     View The Post
-                    <i class="fas fa-arrow-right"></i>
+                    <i class="fas fa-arrow-right arrow"></i>
                 </router-link>
             </div>
         </div>
@@ -76,6 +76,41 @@ export default {
 }
 
 .link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 32px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+    transition: 0.5s ease-in all;
+}
+
+.link:hover {
+    border-bottom-color: #303030;
+}
+
+.link-light:hover {
+    border-bottom-color: #fff;
+}
+
+.blog-photo {
+    order: 1;
+    flex: 3;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.blog-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blog-wrapper:nth-child(even) .blog-content {
+    order: 2;
+}
+
+.blog-wrapper:nth-child(even) .blog-photo {
+    order: 1;
 }
 
 @media (min-width: 700px) {
@@ -96,11 +131,34 @@ export default {
     .blog-content h2 {
         font-size: 40px;
     }
+
+    .blog-photo {
+        order: 2;
+    }
+}
+
+.arrow {
+    margin-left: 8px;
+    width: 12px;
+    color: #000;
+}
+
+.arrow-light {
+    color: #fff;
+}
+
+.no-user:first-child .blog-content {
+    background-color: #303030;
+    color: #fff;
 }
 
 @media (min-width: 800px) {
     .blog-content {
         flex: 3;
+    }
+
+    .blog-photo {
+        flex: 4;
     }
 }
 </style>
