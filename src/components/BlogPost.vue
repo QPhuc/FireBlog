@@ -137,16 +137,6 @@ export default {
     }
 }
 
-.arrow {
-    margin-left: 8px;
-    width: 12px;
-    color: #000;
-}
-
-.arrow-light {
-    color: #fff;
-}
-
 .no-user:first-child .blog-content {
     background-color: #303030;
     color: #fff;
