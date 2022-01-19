@@ -128,6 +128,10 @@ footer {
     text-decoration: none;
 }
 
+.link:hover {
+    text-decoration: underline;
+}
+
 p {
     margin-top: auto;
     margin-bottom: auto;

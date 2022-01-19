@@ -10,6 +10,15 @@
                 </div>
             </div>
         </div>
+        <div class="updates">
+            <div class="container">
+                <h2>Never miss a post. Register for your account today!</h2>
+                <router-link class="router-button" to="#">
+                    Register for FireBlog
+                    <i class="fas fa-arrow-right arrow arrow-light"></i>
+                </router-link>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -54,5 +63,19 @@ export default {
     font-weight: 400;
     font-style: 20px;
     margin-bottom: 32px;
+}
+
+.updates .container {
+    padding: 100px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-height: 800px) {
+    .updates .container {
+        padding: 125px 25px;
+        flex-direction: row;
+    }
 }
 </style>
