@@ -6,7 +6,7 @@
             <div class="container">
                 <h3>View More Recent Blogs</h3>
                 <div class="blog-cards">
-                    <BlogCard v-for="(post, index) in sampleCards" :key="index" />
+                    <BlogCard :post="post" v-for="(post, index) in sampleCards" :key="index" />
                 </div>
             </div>
         </div>
@@ -50,8 +50,8 @@ export default {
 </script>
 
 <style scoped>
-.blog-card-warp h3 {
-    font-weight: 300;
+.blog-card-wrap h3 {
+    font-weight: 400;
     font-style: 20px;
     margin-bottom: 32px;
 }
