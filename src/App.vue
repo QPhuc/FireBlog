@@ -130,7 +130,7 @@ button:hover,
 
 @media (min-width: 500px) {
   .blog-card-wrap {
-    padding: 100px 16px;
+    padding: 100px 120px;
   }
 
   .blog-cards {

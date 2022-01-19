@@ -59,9 +59,9 @@ export default {
 </script>
 
 <style scoped>
-.blog-card-wrap h3 {
+.blog-card-wrap .container h3 {
     font-weight: 400;
-    font-style: 20px;
+    font-size: 25px;
     margin-bottom: 32px;
 }
 
@@ -72,10 +72,34 @@ export default {
     align-items: center;
 }
 
-@media (min-height: 800px) {
+.router-button {
+    display: flex;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.updates .container h2 {
+    font-weight: 300;
+    font-size: 32px;
+    max-width: 425px;
+    width: 100%;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (min-width: 800px) {
     .updates .container {
-        padding: 125px 25px;
+        padding: 125px 120px;
         flex-direction: row;
+    }
+
+    .router-button {
+        margin-left: auto;
+    }
+
+    .updates .container h2 {
+        text-align: initial;
+        font-size: 40px;
     }
 }
 </style>
