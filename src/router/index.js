@@ -31,7 +31,23 @@ const routes = [
     meta: {
       title: "Login"
     },
-    component: () => import(/* webpackChunkName: "login" */ "../views/index.vue"),
+    component: () => import(/* webpackChunkName: "login" */ "../views/login.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    meta: {
+      title: "Register"
+    },
+    component: () => import(/* webpackChunkName: "register" */ "../views/register.vue"),
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    meta: {
+      title: "ForgotPassword"
+    },
+    component: () => import(/* webpackChunkName: "forgotPassword" */ "../views/forgotPassword.vue"),
   },
 ];
 
