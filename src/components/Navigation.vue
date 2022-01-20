@@ -24,13 +24,13 @@
                         </div>
                         <div class="options">
                             <div class="option">
-                                <router-link class="option" to="#">
+                                <router-link class="option" :to="{ name: 'Profile' }">
                                     <i class="far fa-user icon"></i>
                                     <p>Profile</p>
                                 </router-link>
                             </div>
                             <div class="option">
-                                <router-link class="option" to="#">
+                                <router-link class="option" :to="{ name: 'Admin' }">
                                     <i class="fas fa-users-cog icon"></i>
                                     <p>Admin</p>
                                 </router-link>

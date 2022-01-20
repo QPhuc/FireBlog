@@ -49,6 +49,22 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "forgotPassword" */ "../views/forgotPassword.vue"),
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    meta: {
+      title: "Profile"
+    },
+    component: () => import(/* webpackChunkName: "profile" */ "../views/profile.vue"),
+  },
+  {
+    path: "/admin",
+    name: "Admin",
+    meta: {
+      title: "Admin"
+    },
+    component: () => import(/* webpackChunkName: "admin" */ "../views/admin.vue"),
+  },
 ];
 
 const router = createRouter({

@@ -27,7 +27,7 @@ export default {
     width: 100%;
     height: 100%;
     top: 0;
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
 }
 
