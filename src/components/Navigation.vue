@@ -11,7 +11,7 @@
                     <router-link class="link" :to="{ name: 'Newpost' }">Create Post</router-link>
                     <router-link class="link" :to="{ name: 'Login' }">Login / Register</router-link>
                 </ul>
-                <div @click="toggleProfileMenu" class="profile" ref="profile">
+                <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
                     <span>{{ this.$store.state.profileInitials }}</span>
                     <div v-show="profileMenu" class="profile-menu">
                         <div class="info">
@@ -35,7 +35,7 @@
                                     <p>Admin</p>
                                 </router-link>
                             </div>
-                            <div class="option">
+                            <div @click="signOut" class="option">
                                 <i class="fas fa-sign-out-alt icon"></i>
                                 <p>Sign Out</p>
                             </div>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { firebaseAuth } from '../firebase/firebaseInit';
 export default {
     name: 'navigation',
     data() {
@@ -90,8 +91,17 @@ export default {
             if (e.target === this.$refs.profile) {
                 this.profileMenu = !this.profileMenu;
             }
+        },
+        signOut() {
+            firebaseAuth.signOut();
+            window.location.reload();
         }
     },
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
+    }
 }
 </script>
 
