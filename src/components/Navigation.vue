@@ -11,6 +11,37 @@
                     <router-link class="link" :to="{ name: 'Newpost' }">Create Post</router-link>
                     <router-link class="link" :to="{ name: 'Login' }">Login / Register</router-link>
                 </ul>
+                <div @click="toggleProfileMenu" class="profile" ref="profile">
+                    <span>{{ this.$store.state.profileInitials }}</span>
+                    <div v-show="profileMenu" class="profile-menu">
+                        <div class="info">
+                            <p class="initials">{{ this.$store.state.profileInitials }}</p>
+                            <div class="right">
+                                <p>{{ this.$store.state.profileFirstName }} {{ this.$store.state.profileLastName }}</p>
+                                <p>{{ this.$store.state.profileUserName }}</p>
+                                <p>{{ this.$store.state.profileEmail }}</p>
+                            </div>
+                        </div>
+                        <div class="options">
+                            <div class="option">
+                                <router-link class="option" to="#">
+                                    <i class="far fa-user icon"></i>
+                                    <p>Profile</p>
+                                </router-link>
+                            </div>
+                            <div class="option">
+                                <router-link class="option" to="#">
+                                    <i class="fas fa-users-cog icon"></i>
+                                    <p>Admin</p>
+                                </router-link>
+                            </div>
+                            <div class="option">
+                                <i class="fas fa-sign-out-alt icon"></i>
+                                <p>Sign Out</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
         <i @click="toggleMobileNav" class="fas fa-bars menu-icon" v-show="mobile"></i>
@@ -30,6 +61,7 @@ export default {
     name: 'navigation',
     data() {
         return {
+            profileMenu: null,
             mobile: null,
             mobileNav: null,
             windownWidth: null,
@@ -53,6 +85,11 @@ export default {
 
         toggleMobileNav() {
             this.mobileNav = !this.mobileNav;
+        },
+        toggleProfileMenu(e) {
+            if (e.target === this.$refs.profile) {
+                this.profileMenu = !this.profileMenu;
+            }
         }
     },
 }
@@ -114,6 +151,108 @@ nav {
 
 .link:last-child {
     margin-right: 0;
+}
+
+.profile {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #303030;
+}
+
+.profile span {
+    pointer-events: none;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 60px;
+    right: -16px;
+    width: 250px;
+    background-color: #303030;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.profile-menu::before {
+    content: "";
+    position: absolute;
+    top: -32px;
+    right: 16px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 32px solid #303030;
+    border-left: 20px solid transparent;
+}
+
+.profile-menu .info {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #fff;
+}
+
+.initials {
+    position: initial;
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    color: #303030;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.right {
+    flex: 1;
+    margin-left: 24px;
+}
+
+.right:nth-child(1) {
+    font-size: 14px;
+}
+
+.right:nth-child(2),
+.right:nth-child(3) {
+    font-size: 12px;
+}
+
+.options {
+    padding: 15px;
+}
+
+.option {
+    text-decoration: none;
+    display: flex;
+    color: #fff;
+    align-items: inherit;
+    margin-bottom: 12px;
+}
+
+.option .icon {
+    width: 18px;
+    height: auto;
+}
+
+.option p {
+    font-size: 14px;
+    margin-left: 12px;
+}
+
+.options:last-child {
+    margin-bottom: 0;
+}
+
+.option:last-child {
+    margin-bottom: 0;
 }
 
 .menu-icon {
