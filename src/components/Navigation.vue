@@ -8,7 +8,7 @@
                 <ul v-show="!mobile">
                     <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                     <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                    <router-link class="link" :to="{ name: 'Newpost' }">Create Post</router-link>
+                    <router-link v-if="user" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                     <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login / Register</router-link>
                 </ul>
                 <div v-if="user" @click="toggleProfileMenu" class="profile" ref="profile">
@@ -29,12 +29,6 @@
                                     <p>Profile</p>
                                 </router-link>
                             </div>
-                            <div class="option">
-                                <router-link class="option" :to="{ name: 'Admin' }">
-                                    <i class="fas fa-users-cog icon"></i>
-                                    <p>Admin</p>
-                                </router-link>
-                            </div>
                             <div @click="signOut" class="option">
                                 <i class="fas fa-sign-out-alt icon"></i>
                                 <p>Sign Out</p>
@@ -49,7 +43,7 @@
             <ul class="mobile-nav" v-show="mobileNav">
                 <router-link class="link" :to="{ name: 'Home' }">Home</router-link>
                 <router-link class="link" :to="{ name: 'Blogs' }">Blogs</router-link>
-                <router-link class="link" :to="{ name: 'Newpost' }">Create Post</router-link>
+                <router-link v-if="user" class="link" :to="{ name: 'CreatePost' }">Create Post</router-link>
                 <router-link v-if="!user" class="link" :to="{ name: 'Login' }">Login / Register</router-link>
             </ul>
         </transition>

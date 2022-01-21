@@ -58,12 +58,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "profile" */ "../views/profile.vue"),
   },
   {
-    path: "/admin",
-    name: "Admin",
+    path: "/create-post",
+    name: "CreatePost",
     meta: {
-      title: "Admin"
+      title: "CreatePost"
     },
-    component: () => import(/* webpackChunkName: "admin" */ "../views/admin.vue"),
+    component: () => import(/* webpackChunkName: "createPost" */ "../views/createPost.vue"),
   },
 ];
 
