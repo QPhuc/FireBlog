@@ -31,6 +31,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    left: 0;
     width: 100%;
     height: 100%;
 }
@@ -54,7 +55,8 @@ export default {
     font-size: 24px;
     position: absolute;
     top: 15px;
-    color: #1eb8b8;
+    right: 15px;
+    color: #303030;
 }
 
 .modal-content img {

@@ -1,5 +1,6 @@
 <template>
     <div class="create-post">
+        <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
         <div class="container">
             <div :class="{ invisible: !error }" class="err-message">
                 <p>
@@ -49,9 +50,10 @@ import { QuillEditor } from '@vueup/vue-quill'
 const ImageResize = require('quill-image-resize-module').default;
 Quill.register('modules/imageResize', ImageResize);
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import BlogCoverPreview from '../components/BlogCoverPreview.vue';
 
 export default {
-    components: { QuillEditor },
+    components: { QuillEditor, BlogCoverPreview },
     data() {
         return {
             file: null,
