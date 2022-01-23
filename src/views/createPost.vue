@@ -212,6 +212,10 @@ export default {
     margin-left: 16px;
 }
 
+.upload-file label:hover {
+    color: #303030;
+}
+
 .preview {
     margin: 0 16px;
     text-transform: initial;
