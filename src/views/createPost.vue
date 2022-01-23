@@ -200,6 +200,7 @@ export default {
 }
 
 .upload-file label,
+.upload-file button,
 .blog-actions button {
     color: #fff;
     background-color: #303030;
@@ -212,8 +213,9 @@ export default {
     margin-left: 16px;
 }
 
-.upload-file label:hover {
-    color: #303030;
+.upload-file label:hover,
+.upload-file button:hover {
+    background-color: rgba(48, 48, 48, 0.7);
 }
 
 .preview {
