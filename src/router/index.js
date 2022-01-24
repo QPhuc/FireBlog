@@ -61,9 +61,25 @@ const routes = [
     path: "/create-post",
     name: "CreatePost",
     meta: {
-      title: "CreatePost"
+      title: "Create Post"
     },
     component: () => import(/* webpackChunkName: "createPost" */ "../views/createPost.vue"),
+  },
+  {
+    path: "/post-preview",
+    name: "BlogPreview",
+    meta: {
+      title: "Preview Blog Post"
+    },
+    component: () => import(/* webpackChunkName: "blogPreview" */ "../views/blogPreview.vue"),
+  },
+  {
+    path: "/view-blog",
+    name: "ViewBlog",
+    meta: {
+      title: "View Blog Post"
+    },
+    component: () => import(/* webpackChunkName: "viewBlog" */ "../views/viewBlog.vue"),
   },
 ];
 
