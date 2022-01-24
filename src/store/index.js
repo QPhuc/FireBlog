@@ -13,6 +13,8 @@ export default new Vuex.Store({
       { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "01/03/2022" },
       { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "01/04/2022" },
     ],
+    blogPosts: [],
+    postLoaded: null,
     blogHTML: "Write your blog title here...",
     blogTitle: "",
     blogPhotoName: "",
@@ -76,6 +78,24 @@ export default new Vuex.Store({
       const dbResults = await dataBase.get();
       commit("setProfileInfo", dbResults);
       commit("setProfileInitials");
+    },
+    async getPost({ state }) {
+      const dataBase = await firebaseFirestore.collection('blogPosts').orderBy('date', 'desc');
+      const dbResults = await dataBase.get();
+      dbResults.forEach((doc) => {
+        if (!state.blogPosts.some(post => post.blogId === doc.id)) {
+          const data = {
+            blogId: doc.data().blogId,
+            blogHTML: doc.data().blogHTML,
+            blogCoverPhoto: doc.data().blogCoverPhoto,
+            blogTitle: doc.data().blogTitle,
+            blogDate: doc.data().date,
+          };
+          state.blogPosts.push(data);
+        }
+      });
+      state.postLoaded = true;
+      console.log(state.blogPosts);
     },
     async updateUserSettings({ commit, state }) {
       const dataBase = await firebaseFirestore.collection('users').doc(state.profileId);
