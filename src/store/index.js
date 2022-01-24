@@ -29,6 +29,14 @@ export default new Vuex.Store({
     profileId: null,
     profileInitials: null
   },
+  getters: {
+    blogPostsFeed(state) {
+      return state.blogPosts.slice(0, 2);
+    },
+    blogPostCards(state) {
+      return state.blogPosts.slice(2, 6);
+    }
+  },
   mutations: {
     newBlogPost(state, payload) {
       state.blogHTML = payload;
@@ -106,8 +114,5 @@ export default new Vuex.Store({
       });
       commit("setProfileInitials");
     }
-  },
-  getters: {
-
   }
 })
