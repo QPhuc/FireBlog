@@ -4,7 +4,7 @@
             <div class="icon">
                 <i class="far fa-edit edit"></i>
             </div>
-            <div class="icon">
+            <div @click="deletePost" class="icon">
                 <i class="far fa-trash-alt delete"></i>
             </div>
         </div>
@@ -26,6 +26,11 @@
 <script>
 export default {
     props: ["post"],
+    methods: {
+        deletePost() {
+            this.$store.dispatch("deletePost", this.post.blogId);
+        }
+    },
     computed: {
         editPost() {
             return this.$store.state.editPost;
