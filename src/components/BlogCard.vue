@@ -12,7 +12,10 @@
         <div class="info">
             <h4>{{ post.blogTitle }}</h4>
             <h6>Posted on: {{ new Date(post.blogDate).toLocaleString('en-us', { dateStyle: "long" }) }}</h6>
-            <router-link class="link" to="#">
+            <router-link
+                class="link"
+                :to="{ name: 'ViewBlog', params: { blogid: this.post.blogId } }"
+            >
                 View The Post
                 <i class="fas fa-arrow-right arrow"></i>
             </router-link>

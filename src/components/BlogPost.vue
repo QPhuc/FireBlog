@@ -10,7 +10,11 @@
                     Login / Register
                     <i class="fas fa-arrow-right arrow arrow-light"></i>
                 </router-link>
-                <router-link class="link" v-else to="#">
+                <router-link
+                    class="link"
+                    v-else
+                    :to="{ name: 'ViewBlog', params: { blogid: this.post.blogId } }"
+                >
                     View The Post
                     <i class="fas fa-arrow-right arrow"></i>
                 </router-link>

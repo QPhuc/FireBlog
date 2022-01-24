@@ -74,7 +74,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "blogPreview" */ "../views/blogPreview.vue"),
   },
   {
-    path: "/view-blog",
+    path: "/view-blog/:blogid",
     name: "ViewBlog",
     meta: {
       title: "View Blog Post"
