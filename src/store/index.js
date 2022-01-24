@@ -4,15 +4,8 @@ import { firebaseAuth, firebaseFirestore } from '../firebase/firebaseInit';
 
 export default new Vuex.Store({
   modules: {
-
   },
   state: {
-    sampleBlogCards: [
-      { blogTitle: "Blog Card #1", blogCoverPhoto: "stock-1", blogDate: "01/01/2022" },
-      { blogTitle: "Blog Card #2", blogCoverPhoto: "stock-2", blogDate: "01/02/2022" },
-      { blogTitle: "Blog Card #3", blogCoverPhoto: "stock-3", blogDate: "01/03/2022" },
-      { blogTitle: "Blog Card #4", blogCoverPhoto: "stock-4", blogDate: "01/04/2022" },
-    ],
     blogPosts: [],
     postLoaded: null,
     blogHTML: "Write your blog title here...",
@@ -33,7 +26,7 @@ export default new Vuex.Store({
     blogPostsFeed(state) {
       return state.blogPosts.slice(0, 2);
     },
-    blogPostCards(state) {
+    blogPostsCards(state) {
       return state.blogPosts.slice(2, 6);
     }
   },

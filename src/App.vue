@@ -28,8 +28,8 @@ export default {
         this.$store.dispatch("getCurrentUser");
       }
     })
-
     this.checkRoute();
+    this.$store.dispatch("getPost");
   },
   mounted() { },
   methods: {
