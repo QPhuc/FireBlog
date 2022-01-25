@@ -13,7 +13,7 @@
         <div v-if="!user" class="updates">
             <div class="container">
                 <h2>Never miss a post. Register for your account today!</h2>
-                <router-link class="router-button" to="#">
+                <router-link class="router-button" :to="{ name: 'Register' }">
                     Register for FireBlog
                     <i class="fas fa-arrow-right arrow arrow-light"></i>
                 </router-link>
