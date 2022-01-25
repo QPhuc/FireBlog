@@ -1,6 +1,7 @@
 <template>
     <div class="create-post">
         <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
+        <Loading v-show="loading" />
         <div class="container">
             <div :class="{ invisible: !error }" class="err-message">
                 <p>
@@ -20,6 +21,7 @@
                         accept=".png, .jpg, .jpeg"
                     />
                     <button
+                        @click="openPreview"
                         class="preview"
                         :class="{ 'button-inactive': !this.$store.state.blogPhotoFileURL }"
                     >Preview Photo</button>
@@ -28,7 +30,8 @@
             </div>
             <div class="editor">
                 <QuillEditor
-                    :editorSettings="editorSettings"
+                    id="editor-container"
+                    :options="editorOption"
                     v-model:content="blogHTML"
                     contentType="html"
                     theme="snow"
@@ -36,34 +39,72 @@
                 />
             </div>
             <div class="blog-actions">
-                <button>Publish Blog</button>
-                <router-link class="router-button" to="#">Post Preview</router-link>
+                <button @click="uploadBlog">Publish Blog</button>
+                <router-link class="router-button" :to="{ name: 'BlogPreview' }">Post Preview</router-link>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import BlogCoverPreview from '../components/BlogCoverPreview.vue';
+import Loading from '../components/Loading.vue';
+
+import firebase from "firebase/compat/app"
+import { firebaseFirestore } from '../firebase/firebaseInit';
+import "firebase/compat/storage";
+
 import Quill from 'quill';
 window.Quill = Quill;
 import { QuillEditor } from '@vueup/vue-quill'
 const ImageResize = require('quill-image-resize-module').default;
 Quill.register('modules/imageResize', ImageResize);
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import BlogCoverPreview from '../components/BlogCoverPreview.vue';
 
 export default {
-    components: { QuillEditor, BlogCoverPreview },
+    components: { QuillEditor, BlogCoverPreview, Loading },
     data() {
         return {
             file: null,
             error: null,
             errorMsg: null,
-            editorSettings: {
+            loading: null,
+            editorOption: {
                 modules: {
-                    imageResize: {},
+                    imageResize: {
+                        displayStyles: {
+                            backgroundColor: 'black',
+                            border: 'none',
+                            color: 'white'
+                        },
+                        modules: ['Resize', 'DisplaySize', 'Toolbar']
+                    },
                 },
-            }
+            },
+            //     toolbar:
+            //     {
+            //         container: [                          // Toolbar configuration, default is all
+            //             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            //             ['blockquote', 'code-block'],
+
+            //             [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+            //             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            //             [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+            //             [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+            //             [{ 'direction': 'rtl' }],                         // text direction
+
+            //             [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            //             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+            //             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            //             [{ 'font': [] }],
+            //             [{ 'align': [] }],
+
+            //             ['clean'],
+            //             ['image'],
+            //             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            //         ],
+            //     }
         }
     },
     methods: {
@@ -72,7 +113,72 @@ export default {
             const fileName = this.file.name;
             this.$store.commit("fileNameChange", fileName);
             this.$store.commit("createFileURL", URL.createObjectURL(this.file));
+        },
+        openPreview() {
+            this.$store.commit("openPhotoPreview");
+        },
+        uploadBlog() {
+            if (this.blogTitle.lenght !== 0 && this.blogHTML.lenght !== 0) {
+                if (this.file) {
+                    this.loading = true;
+                    console.log(this.file);
+                    console.log(this.$store.state.blogPhotoName);
+                    const storageRef = firebase.storage().ref();
+                    const docRef = storageRef.child(`documents/BlogCoverPhotos/${this.$store.state.blogPhotoName}`);
+                    docRef.put(this.file).on(
+                        "state_changed",
+                        (snapshot) => {
+                            console.log(snapshot);
+                        },
+                        (err) => {
+                            console.log(err);
+                            this.loading = false;
+                        }, async () => {
+                            const downloadURL = await docRef.getDownloadURL();
+                            const timestamp = await Date.now();
+                            const dataBase = await firebaseFirestore.collection("blogPosts").doc();
+
+                            await dataBase.set({
+                                blogId: dataBase.id,
+                                blogHTML: this.blogHTML,
+                                blogCoverPhoto: downloadURL,
+                                blogCoverPhotoName: this.blogCoverPhotoName,
+                                blogTitle: this.blogTitle,
+                                profileId: this.profileId,
+                                date: timestamp
+                            });
+                            await this.$store.dispatch("getPost");
+                            this.loading = false;
+                            this.$router.push({ name: 'ViewBlog', params: { blogid: dataBase.id } });
+                        }
+                    )
+                    return;
+                }
+                this.error = true;
+                this.errorMsg = "Please ensure you upload a cover photo!"
+                setTimeout(() => {
+                    this.error = false;
+                }, 5000)
+            }
+            this.error = true;
+            this.errorMsg = "Please ensure Blog Title & Blog Post has been filled!"
+            setTimeout(() => {
+                this.error = false;
+            }, 5000)
         }
+        // imageHandler(file, Editor, cursorLocation, resetUploader) {
+        //     const storageRef = firebaseFirestore.ref();
+        //     const docRef = storageRef.child(`documents/blogPostPhotos/${file.name}`);
+        //     docRef.put(file).on("state_changed", (snapshot) => {
+        //         console.log(snapshot);
+        //     }, (err) => {
+        //         console.log(err);
+        //     }, async () => {
+        //         const downloadURL = await docRef.getDownloadURL();
+        //         Editor.insertEmbed(cursorLocation, "image", downloadURL);
+        //         resetUploader();
+        //     })
+        // }
     },
     computed: {
         profileId() {
@@ -214,7 +320,8 @@ export default {
 }
 
 .upload-file label:hover,
-.upload-file button:hover {
+.upload-file button:hover,
+.blog-actions button:hover {
     background-color: rgba(48, 48, 48, 0.7);
 }
 
