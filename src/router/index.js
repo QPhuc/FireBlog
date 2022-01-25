@@ -1,4 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
+import NotFound from '../views/404.vue'
+import { firebaseAuth } from "../firebase/firebaseInit"
+
+// Auth Guards
+const requireAuth = (to, from, next) => {
+  const user = firebaseAuth.currentUser;
+
+  if (!user) next({ name: "Login", params: {} })
+  else next();
+};
 
 const routes = [
   {
@@ -16,14 +26,6 @@ const routes = [
       title: "Blogs"
     },
     component: () => import(/* webpackChunkName: "blogs" */ "../views/blogs.vue"),
-  },
-  {
-    path: "/newpost",
-    name: "Newpost",
-    meta: {
-      title: "Newpost"
-    },
-    component: () => import(/* webpackChunkName: "newpost" */ "../views/index.vue"),
   },
   {
     path: "/login",
@@ -56,6 +58,7 @@ const routes = [
       title: "Profile"
     },
     component: () => import(/* webpackChunkName: "profile" */ "../views/profile.vue"),
+    beforeEnter: requireAuth,
   },
   {
     path: "/create-post",
@@ -64,6 +67,7 @@ const routes = [
       title: "Create Post"
     },
     component: () => import(/* webpackChunkName: "createPost" */ "../views/createPost.vue"),
+    beforeEnter: requireAuth,
   },
   {
     path: "/post-preview",
@@ -72,6 +76,7 @@ const routes = [
       title: "Preview Blog Post"
     },
     component: () => import(/* webpackChunkName: "blogPreview" */ "../views/blogPreview.vue"),
+    beforeEnter: requireAuth,
   },
   {
     path: "/view-blog/:blogid",
@@ -88,6 +93,14 @@ const routes = [
       title: "Edit Blog Post"
     },
     component: () => import(/* webpackChunkName: "editBlog" */ "../views/editBlog.vue"),
+    beforeEnter: requireAuth,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    meta: {
+      title: "NotFound"
+    },
+    component: NotFound
   },
 ];
 
