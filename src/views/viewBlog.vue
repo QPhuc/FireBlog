@@ -16,8 +16,8 @@ export default {
             currentBlog: null,
         }
     },
-    async beforeMount() {
-        this.currentBlog = await this.$store.state.blogPosts.filter(post => {
+    beforeMount() {
+        this.currentBlog = this.$store.state.blogPosts.filter(post => {
             return post.blogId === this.$route.params.blogid;
         });
     }
